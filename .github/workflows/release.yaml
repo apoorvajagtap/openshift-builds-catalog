@@ -22,3 +22,11 @@ jobs:
         do 
           cat $file >> release-strategies.yaml
         done
+    - name: Generate and upload release.yaml
+      env:
+        REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        REGISTRY_USERNAME: ${{ github.repository_owner }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release create ${TAG} release-strategies.yaml
+        gh release upload ${TAG} release-strategies.yaml
